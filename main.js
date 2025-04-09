@@ -18,6 +18,7 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow();
 
+  // ipcMain.handle 在主进程中处理来自渲染进程的异步请求
   ipcMain.handle('chat', async (event, message) => {
     try {
       const response = await axios.post('http://your-ollama-api/chat', { prompt: message });

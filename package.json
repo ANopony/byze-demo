@@ -2,13 +2,17 @@
   "name": "byze-demo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.8.4"
+  },
+  "devDependencies": {
+    "electron": "^35.1.4"
   }
 }

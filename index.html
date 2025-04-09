@@ -3,15 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <title>AI Desktop App</title>
+    <style>
+      /* 侧边栏样式 */
+      .sidebar {
+        width: 100px;
+        height: 100vh;
+        background-color: #f0f0f0;
+        float: left;
+      }
+      .sidebar button {
+        width: 100%;
+        padding: 10px;
+        border: blue 1px solid;
+        background-color: transparent;
+        text-align: left;
+        cursor: pointer;
+      }
+      /* 界面容器样式 */
+      .content {
+        margin-left: 200px;
+        padding: 20px;
+      }
+      .page {
+        display: none;
+      }
+      .page.active {
+        display: block;
+      }
+      /* 聊天界面样式 */
+      .chat-bubble {
+        padding: 10px;
+        margin: 5px;
+        border-radius: 10px;
+        max-width: 70%;
+      }
+      .user-bubble {
+        background-color: #d1e7dd;
+        align-self: flex-end;
+      }
+      .ai-bubble {
+        background-color: #f8d7da;
+        align-self: flex-start;
+      }
+      #chat-output {
+        display: flex;
+        flex-direction: column;
+        height: 300px;
+        overflow-y: auto;
+      }
+      #chat-input-container {
+        display: flex;
+        margin-top: 10px;
+      }
+      #message-input {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+    </style>
   </head>
   <body>
-    <div id="chat-container">
-      <input type="text" id="message-input" />
-      <button id="send-button">Send</button>
-      <div id="chat-output"></div>
+    <div class="sidebar">
+      <button data-page="chat">Chat</button>
+      <button data-page="embed">Embed</button>
+      <button data-page="text-to-image">Text-to-Image</button>
+      <button data-page="settings">Settings</button>
     </div>
-    <div id="image-container">
-      <img id="generated-image" />
+    <div class="content">
+      <div id="chat" class="page active">
+        <div id="chat-output"></div>
+        <div id="chat-input-container">
+        <input type="text" id="message-input" />
+        <button id="send-button">Send</button>
+        </div>
+      </div>
+      <div id="embed" class="page">
+        <h1>Embed 功能</h1>
+        <p>这里是 Embed 功能的界面。</p>
+      </div>
+      <div id="text-to-image" class="page">
+        <div id="image-container">
+          <img id="generated-image" />
+        </div>
+      </div>
+      <div id="settings" class="page">
+        <h1>设置</h1>
+        <p>这里是设置界面。</p>
+      </div>
     </div>
     <script src="renderer.js"></script>
   </body>
