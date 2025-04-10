@@ -21,10 +21,23 @@ app.whenReady().then(() => {
   // ipcMain.handle 在主进程中处理来自渲染进程的异步请求
   ipcMain.handle('chat', async (event, message) => {
     try {
-      const response = await axios.post('http://your-ollama-api/chat', { prompt: message });
+      const response = await axios.post('http://127.0.0.1/api/chat', { prompt: message });
       return response.data.response;
     } catch (error) {
       console.error('Chat API error:', error);
+      return 'API request error.';
+    }
+  });
+
+  ipcMain.handle('chat-stream', async (event, message) => {
+    try{
+      byze.Chat(message, (stream) => {
+        stream.on('data', (data) => {
+          yield data;
+        });
+      });
+    } catch (error) {
+      console.error('Chat stream API error:', error);
       return 'API request error.';
     }
   });

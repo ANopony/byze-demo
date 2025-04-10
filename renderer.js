@@ -17,13 +17,20 @@ sendButton.addEventListener('click', async () => {
     
   try {
     // 调用主进程的 chat 函数
-    const chatResponse = await ipcRenderer.invoke('chat', message);
+    const stream = await ipcRenderer.invoke('chat-stream', message);
     // 添加模型回复气泡
     const aiBubble = document.createElement('div');
     aiBubble.classList.add('chat-bubble', 'ai-bubble');
-    aiBubble.textContent = chatResponse;
     chatOutput.appendChild(aiBubble);
-    
+
+    let fullContent = '';
+    for await (const chunk of stream) {
+      const jsonString = JSON.stringify(chunk);
+      const json = JSON.parse(jsonString);
+      fullContent += json.message.content;
+      aiBubble.textContent = fullContent;
+      chatOutput.scrollTop = chatOutput.scrollHeight;
+    }
   } catch (error) {
     console.error('IPC error:', error);
     const errorBubble = document.createElement('div');
