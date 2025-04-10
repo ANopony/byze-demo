@@ -13,34 +13,45 @@ sendButton.addEventListener('click', async () => {
   userBubble.classList.add('chat-bubble', 'user-bubble');
   userBubble.textContent = message;
   chatOutput.appendChild(userBubble);
-  messageInput.value = '';
-    
-  try {
-    // 调用主进程的 chat 函数
-    const stream = await ipcRenderer.invoke('chat-stream', message);
-    // 添加模型回复气泡
-    const aiBubble = document.createElement('div');
-    aiBubble.classList.add('chat-bubble', 'ai-bubble');
-    chatOutput.appendChild(aiBubble);
+  // 添加助手消息气泡（用于动态更新内容）
+  const assistantBubble = document.createElement('div');
+  assistantBubble.classList.add('chat-bubble', 'assistant-bubble');
+  chatOutput.appendChild(assistantBubble);
 
-    let fullContent = '';
-    for await (const chunk of stream) {
-      const jsonString = JSON.stringify(chunk);
-      const json = JSON.parse(jsonString);
-      fullContent += json.message.content;
-      aiBubble.textContent = fullContent;
-      chatOutput.scrollTop = chatOutput.scrollHeight;
-    }
-  } catch (error) {
-    console.error('IPC error:', error);
-    const errorBubble = document.createElement('div');
-    errorBubble.classList.add('chat-bubble', 'ai-bubble');
-    errorBubble.textContent = 'Error occurred. Please try again.';
-    chatOutput.appendChild(errorBubble);
-  }
-  
   // 滚动到最新消息
   chatOutput.scrollTop = chatOutput.scrollHeight;
+
+  // 清空输入框
+  messageInput.value = '';
+
+  // 发送消息到主进程并监听流式响应
+  ipcRenderer.send('chat-stream', {
+    model: 'deepseek-r1:7b',
+    messages: [
+      {
+        role: 'user',
+        content: message,
+      },
+    ],
+    stream: true,
+  });
+
+  // 监听流式数据
+  ipcRenderer.on('chat-stream-data', (event, data) => {
+    assistantBubble.textContent += data; // 动态更新助手气泡内容
+    chatOutput.scrollTop = chatOutput.scrollHeight; // 滚动到最新消息
+  });
+
+  // 监听流结束
+  ipcRenderer.on('chat-stream-end', () => {
+    console.log('流式响应结束');
+  });
+
+  // 监听流错误
+  ipcRenderer.on('chat-stream-error', (event, error) => {
+    console.error('流式响应错误:', error);
+    assistantBubble.textContent = '发生错误，请稍后重试。';
+  });
 });
     
 // 侧边栏切换

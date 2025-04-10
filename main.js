@@ -1,6 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const axios = require('axios');
+const ByzeLib = require('byze-lib');
+
+const byze = new ByzeLib();
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -11,6 +14,7 @@ function createWindow() {
       contextIsolation: false,
     },
   });
+  console.log('Window created');
 
   win.loadFile('index.html');
 }
@@ -29,17 +33,20 @@ app.whenReady().then(() => {
     }
   });
 
-  ipcMain.handle('chat-stream', async (event, message) => {
-    try{
-      byze.Chat(message, (stream) => {
-        stream.on('data', (data) => {
-          yield data;
-        });
-      });
-    } catch (error) {
-      console.error('Chat stream API error:', error);
-      return 'API request error.';
-    }
+  ipcMain.on('chat-stream', async (event, messageObj) => {
+    const stream = await byze.Chat(messageObj);
+  
+    stream.on('data', (data) => {
+      event.sender.send('chat-stream-data', data.message?.content || '');
+    });
+  
+    stream.on('end', () => {
+      event.sender.send('chat-stream-end');
+    });
+  
+    stream.on('error', (err) => {
+      event.sender.send('chat-stream-error', err);
+    });
   });
 
   ipcMain.handle('generate-image', async (event, prompt) => {
