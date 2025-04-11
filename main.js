@@ -49,13 +49,13 @@ app.whenReady().then(() => {
     });
   });
 
-  ipcMain.handle('generate-image', async (event, prompt) => {
+  ipcMain.handle('generate-image', async (event, { model, prompt }) => {
     try {
-      const response = await axios.post('http://your-ollama-api/generate-image', { prompt: prompt });
-      return response.data.imageUrl;
+      const response = await byze.TextToImage({ model, prompt });
+      return response.data.url; // 返回图片的 URL
     } catch (error) {
-      console.error('Image API error:', error);
-      return null;
+      console.error('生成图片失败:', error);
+      return null; // 返回 null 表示失败
     }
   });
 

@@ -3,7 +3,10 @@ const { ipcRenderer } = require('electron');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
 const chatOutput = document.getElementById('chat-output');
+const generateButton = document.getElementById('generate-button');
+const promptInput = document.getElementById('prompt-input');
 const generatedImage = document.getElementById('generated-image');
+
 
 // ipcRenderer.invoke 是一个异步方法，用于向主进程发送请求并等待响应
 sendButton.addEventListener('click', async () => {
@@ -52,6 +55,28 @@ sendButton.addEventListener('click', async () => {
     console.error('流式响应错误:', error);
     assistantBubble.textContent = '发生错误，请稍后重试。';
   });
+});
+
+// 文生图
+generateButton.addEventListener('click', async () => {
+  const prompt = promptInput.value;
+
+  // 清空之前的图片
+  generatedImage.src = '';
+  generatedImage.alt = '正在生成图片...';
+
+  // 调用主进程的生成图片方法
+  const imageUrl = await ipcRenderer.invoke('generate-image', {
+    model: 'wanx2.1-t2i-turbo',
+    prompt: prompt,
+  });
+
+  if (imageUrl) {
+    generatedImage.src = imageUrl;
+    generatedImage.alt = '生成的图片';
+  } else {
+    generatedImage.alt = '生成图片失败，请重试。';
+  }
 });
     
 // 侧边栏切换
