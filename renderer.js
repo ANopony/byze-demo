@@ -7,6 +7,7 @@ const generateButton = document.getElementById('generate-button');
 const promptInput = document.getElementById('prompt-input');
 const generatedImage = document.getElementById('generated-image');
 
+const chatHistory = [];
 
 // ipcRenderer.invoke 是一个异步方法，用于向主进程发送请求并等待响应
 sendButton.addEventListener('click', async () => {
@@ -24,6 +25,8 @@ sendButton.addEventListener('click', async () => {
   chatOutput.appendChild(userBubble);
   messageInput.value = '';  // 清空输入框
 
+  chatHistory.push({ role: 'user', content: message });
+
   // 创建新的助手气泡
   const assistantBubble = document.createElement('div');
   assistantBubble.classList.add('chat-bubble', 'ai-bubble');  // 修正类名为ai-bubble
@@ -35,7 +38,7 @@ sendButton.addEventListener('click', async () => {
   // 发送请求前先移除旧监听器
   ipcRenderer.send('chat-stream', {
     model: 'deepseek-r1:7b',
-    messages: [{ role: 'user', content: message }],
+    messages: chatHistory,
     stream: true
   });
 
@@ -48,6 +51,7 @@ sendButton.addEventListener('click', async () => {
   ipcRenderer.once('chat-stream-end', () => {
     console.log('流式响应结束');
     // 清理监听器
+    chatHistory.push({ role: 'assistant', content: assistantBubble.textContent });
     ipcRenderer.removeAllListeners('chat-stream-data');
     ipcRenderer.removeAllListeners('chat-stream-error');
   });
