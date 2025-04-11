@@ -11,49 +11,51 @@ const generatedImage = document.getElementById('generated-image');
 // ipcRenderer.invoke 是一个异步方法，用于向主进程发送请求并等待响应
 sendButton.addEventListener('click', async () => {
   const message = messageInput.value;
-  // 添加用户消息气泡
+
+  // 移除之前的流式监听器防止重复
+  ipcRenderer.removeAllListeners('chat-stream-data');
+  ipcRenderer.removeAllListeners('chat-stream-end');
+  ipcRenderer.removeAllListeners('chat-stream-error');
+
+  // 创建新消息气泡
   const userBubble = document.createElement('div');
   userBubble.classList.add('chat-bubble', 'user-bubble');
   userBubble.textContent = message;
   chatOutput.appendChild(userBubble);
-  // 添加助手消息气泡（用于动态更新内容）
+  messageInput.value = '';  // 清空输入框
+
+  // 创建新的助手气泡
   const assistantBubble = document.createElement('div');
-  assistantBubble.classList.add('chat-bubble', 'assistant-bubble');
+  assistantBubble.classList.add('chat-bubble', 'ai-bubble');  // 修正类名为ai-bubble
   chatOutput.appendChild(assistantBubble);
 
   // 滚动到最新消息
   chatOutput.scrollTop = chatOutput.scrollHeight;
 
-  // 清空输入框
-  messageInput.value = '';
-
-  // 发送消息到主进程并监听流式响应
+  // 发送请求前先移除旧监听器
   ipcRenderer.send('chat-stream', {
     model: 'deepseek-r1:7b',
-    messages: [
-      {
-        role: 'user',
-        content: message,
-      },
-    ],
-    stream: true,
+    messages: [{ role: 'user', content: message }],
+    stream: true
   });
 
-  // 监听流式数据
+  // 创建新的监听器（使用once确保只触发一次）
   ipcRenderer.on('chat-stream-data', (event, data) => {
-    assistantBubble.textContent += data; // 动态更新助手气泡内容
-    chatOutput.scrollTop = chatOutput.scrollHeight; // 滚动到最新消息
+    assistantBubble.textContent += data;
+    chatOutput.scrollTop = chatOutput.scrollHeight;
   });
 
-  // 监听流结束
-  ipcRenderer.on('chat-stream-end', () => {
+  ipcRenderer.once('chat-stream-end', () => {
     console.log('流式响应结束');
+    // 清理监听器
+    ipcRenderer.removeAllListeners('chat-stream-data');
+    ipcRenderer.removeAllListeners('chat-stream-error');
   });
 
-  // 监听流错误
-  ipcRenderer.on('chat-stream-error', (event, error) => {
+  ipcRenderer.once('chat-stream-error', (event, error) => {
     console.error('流式响应错误:', error);
     assistantBubble.textContent = '发生错误，请稍后重试。';
+    ipcRenderer.removeAllListeners('chat-stream-data');
   });
 });
 
