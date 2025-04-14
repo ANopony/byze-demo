@@ -3,10 +3,6 @@ const { ipcRenderer } = require('electron');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
 const chatOutput = document.getElementById('chat-output');
-const generateButton = document.getElementById('generate-button');
-const promptInput = document.getElementById('prompt-input');
-const generatedImage = document.getElementById('generated-image');
-
 const chatHistory = [];
 
 // ipcRenderer.invoke 是一个异步方法，用于向主进程发送请求并等待响应
@@ -64,6 +60,10 @@ sendButton.addEventListener('click', async () => {
 });
 
 // 文生图
+const generateButton = document.getElementById('generate-button');
+const promptInput = document.getElementById('prompt-input');
+const generatedImage = document.getElementById('generated-image');
+
 generateButton.addEventListener('click', async () => {
   const prompt = promptInput.value;
 
@@ -84,7 +84,48 @@ generateButton.addEventListener('click', async () => {
     generatedImage.alt = '生成图片失败，请重试。';
   }
 });
-    
+
+// embed
+const selectFileButton = document.getElementById('select-file-button');
+const processFileButton = document.getElementById('process-file-button');
+const selectedFilePath = document.getElementById('selected-file-path');
+const embeddingResult = document.getElementById('embedding-result');
+
+let filePath = ''; // 用于存储选中的文件路径
+
+// 选择文件
+selectFileButton.addEventListener('click', async () => {
+  const result = await ipcRenderer.invoke('select-file');
+  if (result.canceled) {
+    selectedFilePath.textContent = '未选择文件';
+    filePath = '';
+  } else {
+    filePath = result.filePaths[0]; // 获取选中的文件路径
+    selectedFilePath.textContent = filePath;
+  }
+});
+
+// 处理文件上传
+processFileButton.addEventListener('click', async () => {
+  if (!filePath) {
+    embeddingResult.textContent = '请先选择一个文件！';
+    return;
+  }
+
+  // 调用主进程处理文件并获取嵌入向量
+  embeddingResult.textContent = '正在处理文件，请稍候...';
+  const embeddings = await ipcRenderer.invoke('embed', {
+    model: 'embedding-v1',
+    filePath, // 传递完整路径
+  });
+
+  if (embeddings) {
+    embeddingResult.textContent = JSON.stringify(embeddings, null, 2);
+  } else {
+    embeddingResult.textContent = '处理文件失败，请重试。';
+  }
+});
+
 // 侧边栏切换
 const sidebarButtons = document.querySelectorAll('.sidebar button');
 const pages = document.querySelectorAll('.page');
