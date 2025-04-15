@@ -102,8 +102,28 @@
           </div>
       </div>
       <div id="settings" class="page">
-        <h1>设置</h1>
-        <p>这里是设置界面。</p>
+        <h1>Settings</h1>
+        <form id="settings-form">
+          <h3>Chat Settings</h3>
+          <label for="chat-model">Chat Model:</label>
+          <input type="text" id="chat-model" placeholder="Enter Chat Model" />
+          <label for="chat-url">Chat URL:</label>
+          <input type="text" id="chat-url" placeholder="Enter Chat URL" />
+      
+          <h3>Embed Settings</h3>
+          <label for="embed-model">Embed Model:</label>
+          <input type="text" id="embed-model" placeholder="Enter Embed Model" />
+          <label for="embed-url">Embed URL:</label>
+          <input type="text" id="embed-url" placeholder="Enter Embed URL" />
+      
+          <h3>Text-to-Image Settings</h3>
+          <label for="text-to-image-model">Text-to-Image Model:</label>
+          <input type="text" id="text-to-image-model" placeholder="Enter Text-to-Image Model" />
+          <label for="text-to-image-url">Text-to-Image URL:</label>
+          <input type="text" id="text-to-image-url" placeholder="Enter Text-to-Image URL" />
+      
+          <button type="button" id="save-settings-button">Save Settings</button>
+        </form>
       </div>
     </div>
     <script src="renderer.js"></script>

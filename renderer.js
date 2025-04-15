@@ -126,6 +126,34 @@ processFileButton.addEventListener('click', async () => {
   }
 });
 
+// settings
+const saveSettingsButton = document.getElementById('save-settings-button');
+
+saveSettingsButton.addEventListener('click', async () => {
+  const settings = {
+    chat: {
+      model: document.getElementById('chat-model').value,
+      url: document.getElementById('chat-url').value,
+    },
+    embed: {
+      model: document.getElementById('embed-model').value,
+      url: document.getElementById('embed-url').value,
+    },
+    textToImage: {
+      model: document.getElementById('text-to-image-model').value,
+      url: document.getElementById('text-to-image-url').value,
+    },
+  };
+
+  // 调用主进程保存设置
+  const result = await ipcRenderer.invoke('save-settings', settings);
+  if (result.success) {
+    alert('Settings saved successfully!');
+  } else {
+    alert('Failed to save settings.');
+  }
+});
+
 // 侧边栏切换
 const sidebarButtons = document.querySelectorAll('.sidebar button');
 const pages = document.querySelectorAll('.page');

@@ -98,6 +98,17 @@ app.whenReady().then(() => {
     }
   });
 
+  ipcMain.handle('save-settings', async (event, settings) => {
+    try {
+      const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+      fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2), 'utf-8');
+      return { success: true };
+    } catch (error) {
+      console.error('Failed to save settings:', error);
+      return { success: false };
+    }
+  });
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
