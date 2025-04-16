@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+// TODO: 超过16个分段会遭到模型拒绝
 function spliter(str, chunkSize = 10) {
   // 去除换行符 \n 和 \r
   const cleanedStr = str.replace(/[\n\r]/g, '');
@@ -11,6 +12,18 @@ function spliter(str, chunkSize = 10) {
   }
 
   return parts.filter(part => part.trim() !== ''); // 去除空白段
+}
+
+function readConfig(path) {
+  const configPath = path || './settings.json';
+  try {
+    const f = fs.readFileSync(configPath, 'utf-8');
+    const data = JSON.parse(f);
+    return data;
+  } catch (error) {
+    console.error('读取配置文件失败:', error);
+    return null;
+  }
 }
 
 module.exports = {

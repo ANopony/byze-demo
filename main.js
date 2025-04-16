@@ -71,17 +71,32 @@ app.whenReady().then(() => {
       // 使用 tools.js 的 spliter 函数分割文件内容
       const segments = spliter(fileContent, 100);
   
-      // 调用 byze.Embed
-      const response = await byze.Embed({
-        model,
-        input: segments,
-      });
+      // 按16个分段为一组分批处理
+      const batchSize = 16;
+      const batches = [];
+      for (let i = 0; i < segments.length; i += batchSize) {
+        batches.push(segments.slice(i, i + batchSize));
+      }
   
-      // 返回嵌入向量
-      return response.data.map((item) => ({
-        index: item.index,
-        embedding: item.embedding,
-      }));
+      const allEmbeddings = [];
+      for (const batch of batches) {
+        // 调用 byze.Embed 处理每一组分段
+        const response = await byze.Embed({
+          model,
+          input: batch,
+        });
+  
+        // 将结果添加到总的嵌入向量数组中
+        allEmbeddings.push(
+          ...response.data.map((item) => ({
+            index: item.index,
+            embedding: item.embedding,
+          }))
+        );
+      }
+  
+      // 返回所有嵌入向量
+      return allEmbeddings;
     } catch (error) {
       console.error('处理文件失败:', error);
       return null;
