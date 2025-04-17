@@ -105,7 +105,7 @@ selectFileButton.addEventListener('click', async () => {
   }
 });
 
-// 处理文件上传
+// embed文件
 processFileButton.addEventListener('click', async () => {
   if (!filePath) {
     embeddingResult.textContent = '请先选择一个文件！';
@@ -120,12 +120,42 @@ processFileButton.addEventListener('click', async () => {
   });
 
   if (embeddings) {
-    embeddingResult.textContent = JSON.stringify(embeddings, null, 2);
+    // 清空之前的结果
+    embeddingResult.textContent = '';
+    embeddingResult.innerHTML = ''; // 确保清空内容
+
+    // 遍历每个分段，创建一个框
+    embeddings.forEach((embedding, index) => {
+      const segmentBox = document.createElement('div');
+      segmentBox.classList.add('segment-box');
+      segmentBox.textContent = `分段 ${index + 1}: ${embedding.text.slice(0, 10)}...`; // 显示前10个字符
+
+      // 点击框后展示完整内容和嵌入向量
+      segmentBox.addEventListener('click', () => {
+        const detailContainer = document.createElement('div');
+        detailContainer.classList.add('segment-detail');
+
+        const segmentText = document.createElement('p');
+        segmentText.textContent = `内容: ${embedding.text}`;
+
+        const segmentEmbedding = document.createElement('pre');
+        segmentEmbedding.textContent = `嵌入向量: ${JSON.stringify(embedding.embedding, null, 2)}`;
+
+        detailContainer.appendChild(segmentText);
+        detailContainer.appendChild(segmentEmbedding);
+
+        // 清空并展示详细信息
+        embeddingResult.innerHTML = '';
+        embeddingResult.appendChild(detailContainer);
+      });
+
+      // 将框添加到结果容器中
+      embeddingResult.appendChild(segmentBox);
+    });
   } else {
     embeddingResult.textContent = '处理文件失败，请重试。';
   }
 });
-
 // settings
 const saveSettingsButton = document.getElementById('save-settings-button');
 
