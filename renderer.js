@@ -115,7 +115,7 @@ processFileButton.addEventListener('click', async () => {
   // 调用主进程处理文件并获取嵌入向量
   embeddingResult.textContent = '正在处理文件，请稍候...';
   const embeddings = await ipcRenderer.invoke('embed', {
-    model: 'embedding-v1',
+    model: 'bge-m3',
     filePath, // 传递完整路径
   });
 
