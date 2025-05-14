@@ -12,7 +12,6 @@ app.use(express.static('public'));
 app.use('/images', express.static('server/images')); // 静态文件目录
 
 app.post('/api/generate-image', async (req, res) => {
-    const { prompt, location } = req.body;
     try {
         const imageUrls = await imageProcessing.generateImage(prompt, location);
         res.json({ imageUrls });
@@ -23,7 +22,6 @@ app.post('/api/generate-image', async (req, res) => {
 });
 
 app.post('/api/upscale-image', async (req, res) => {
-    const { imageUrl, location } = req.body;
     try {
         const upscaledImageUrl = await imageProcessing.upscaleImage(imageUrl, location);
         res.json({ upscaledImageUrl });

@@ -2,7 +2,6 @@ const promptInput = document.getElementById('prompt');
 const generateLocationSelect = document.getElementById('generate-location');
 const generateButton = document.getElementById('generate-button');
 const imageDisplay = document.querySelector('.image-display');
-const selectButton = document.getElementById('select-button');
 const upscaleLocationSelect = document.getElementById('upscale-location');
 const upscaleButton = document.getElementById('upscale-button');
 const upscaledImageDisplay = document.querySelector('.upscaled-image-display');
@@ -12,7 +11,7 @@ let selectedImageUrl = null;
 
 generateButton.addEventListener('click', async () => {
     const promptText = promptInput.value;
-    const location = generateLocationSelect.value;
+    const location = generateLocationSelect.value; // 远程/本地
     if (!promptText) {
         alert('请输入描述文字');
         return;
@@ -37,14 +36,12 @@ generateButton.addEventListener('click', async () => {
                     document.querySelectorAll('.generated-image').forEach(el => el.classList.remove('selected'));
                     img.classList.add('selected');
                     selectedImageUrl = url;
-                    selectButton.disabled = false;
                     upscaleLocationSelect.disabled = false;
                     upscaleButton.disabled = false;
                 });
                 imageDisplay.appendChild(img);
                 return url;
             });
-            selectButton.disabled = true;
             upscaleLocationSelect.disabled = true;
             upscaleButton.disabled = true;
             upscaledImageDisplay.innerHTML = '';
@@ -65,7 +62,7 @@ upscaleButton.addEventListener('click', async () => {
         alert('请先选择一张图片');
         return;
     }
-    const location = upscaleLocationSelect.value;
+    const location = upscaleLocationSelect.value; // 远程/本地
 
     try {
         const response = await fetch('/api/upscale-image', {
