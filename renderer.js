@@ -156,6 +156,11 @@ processFileButton.addEventListener('click', async () => {
     embeddingResult.textContent = '处理文件失败，请重试。';
   }
 });
+
+// 图生图
+
+
+
 // settings
 const saveSettingsButton = document.getElementById('save-settings-button');
 

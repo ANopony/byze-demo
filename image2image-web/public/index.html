@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文生图应用</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="top-section">
+            <div class="input-area">
+                <input type="text" id="prompt" placeholder="请输入描述文字">
+                <select id="generate-location">
+                    <option value="local">本地</option>
+                    <option value="cloud">云端</option>
+                </select>
+                <button id="generate-button">生成图片</button>
+            </div>
+            <div class="image-display">
+                </div>
+        </div>
+        <div class="bottom-section">
+            <button id="select-button" disabled>选择图片</button>
+            <select id="upscale-location" disabled>
+                <option value="local">本地</option>
+                <option value="cloud">云端</option>
+            </select>
+            <button id="upscale-button" disabled>生成高清图</button>
+            <div class="upscaled-image-display">
+                </div>
+        </div>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+</html>
