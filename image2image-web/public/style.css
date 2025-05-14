@@ -74,6 +74,41 @@ body {
     border-radius: 4px;
 }
 
+.radio-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.radio-group input[type="radio"] {
+    display: none; /* 隐藏默认单选按钮 */
+}
+
+.radio-group input[type="radio"] + span {
+    font-size: 16px;
+    color: #333;
+}
+
+.radio-group input[type="radio"]:checked + span {
+    font-weight: bold;
+    color: #007bff; /* 选中时的颜色 */
+}
+
+.radio-group input[type="radio"]:checked + span::before {
+    content: "◉ "; /* 选中时显示实心圆 */
+}
+
+.radio-group input[type="radio"]:not(:checked) + span::before {
+    content: "○ "; /* 未选中时显示空心圆 */
+}
+
 .generated-image {
     max-width: 150px;
     max-height: 150px;
@@ -146,4 +181,39 @@ body {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+}
+
+.radio-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.radio-group input[type="radio"] {
+    display: none; /* 隐藏默认单选按钮 */
+}
+
+.radio-group input[type="radio"] + span {
+    font-size: 16px;
+    color: #333;
+}
+
+.radio-group input[type="radio"]:checked + span {
+    font-weight: bold;
+    color: #007bff; /* 选中时的颜色 */
+}
+
+.radio-group input[type="radio"]:checked + span::before {
+    content: "◉ "; /* 选中时显示实心圆 */
+}
+
+.radio-group input[type="radio"]:not(:checked) + span::before {
+    content: "○ "; /* 未选中时显示空心圆 */
 }
