@@ -60,8 +60,14 @@ upscaleButton.addEventListener('click', async () => {
         alert('请先选择一张图片');
         return;
     }
-    // const location = upscaleLocationSelect.value; // 远程/本地
-    const location = document.querySelector('input[name="location"]:checked').value; // 远程/本地
+
+    const location = document.querySelector('input[name="location"]:checked').value; // 获取本地/云端选项
+    const description = document.getElementById('upscale-description').value; // 获取描述文字
+
+    if (!description) {
+        alert('请输入图片描述');
+        return;
+    }
 
     try {
         const response = await fetch('/api/upscale-image', {
@@ -69,7 +75,11 @@ upscaleButton.addEventListener('click', async () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ imageUrl: selectedImageUrl, location: location })
+            body: JSON.stringify({ 
+                imageUrl: selectedImageUrl, 
+                location: location, 
+                description: description // 添加描述文字
+            })
         });
         const data = await response.json();
         if (data.upscaledImageUrl) {

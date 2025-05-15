@@ -14,12 +14,12 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 80%;
-    max-width: 960px;
+    width: 90%; /* 增加宽度 */
+    max-width: 1200px; /* 增加最大宽度 */
+    height: 90vh; /* 增加初始高度 */
     display: flex;
     flex-direction: column;
 }
-
 .top-section {
     display: flex;
     margin-bottom: 20px;
@@ -72,6 +72,7 @@ body {
     border: 1px solid #eee;
     padding: 10px;
     border-radius: 4px;
+    min-height: 160px; /* 增加初始高度 */
 }
 
 .radio-group {
@@ -122,34 +123,47 @@ body {
     border-color: #28a745;
 }
 
+/* 调整 bottom-section 的布局 */
 .bottom-section {
     padding-top: 20px;
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column; /* 改为垂直布局 */
     gap: 10px;
-    height: 75%; /* 占据 2/3 的高度 */
+    height: 75%;
 }
 
-.bottom-section > div {
+/* 调整 input-area 的样式 */
+.bottom-section .input-area {
+    flex: 1;
+    padding-right: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 10px;
 }
 
-.bottom-section button,
-.bottom-section select {
-    padding: 10px 20px;
-    font-size: 16px;
+/* 调整输入框样式 */
+#upscale-description {
+    padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 16px;
+    width: 100%; /* 与生成图片输入框一致 */
+    box-sizing: border-box;
 }
 
+/* 调整按钮样式 */
 .bottom-section button {
-    background-color: #28a745;
+    padding: 10px 20px;
+    background-color: #007bff;
     color: white;
     border: none;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
+}
+
+.bottom-section button:hover {
+    background-color: #0056b3;
 }
 
 .bottom-section button:disabled {
@@ -157,63 +171,48 @@ body {
     cursor: not-allowed;
 }
 
-.bottom-section button:hover:not(:disabled) {
-    background-color: #1e7e34;
-}
-
-#upscale-location,
-#upscale-button {
-    width: auto; /* 保持按钮和选择器的宽度 */
-}
-
-.upscaled-image-display {
-    flex: 1;
-    margin-top: 0;
-    border: 1px solid #eee;
-    padding: 10px;
-    border-radius: 4px;
-    text-align: center;
-    max-height: 100%;
-    overflow: auto;
-}
-
-.upscaled-image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-.radio-group {
+/* 调整选择器样式 */
+.bottom-section .radio-group {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-.radio-group label {
+.bottom-section .radio-group label {
     display: flex;
     align-items: center;
     cursor: pointer;
     font-size: 16px;
 }
 
-.radio-group input[type="radio"] {
+.bottom-section .radio-group input[type="radio"] {
     display: none; /* 隐藏默认单选按钮 */
 }
 
-.radio-group input[type="radio"] + span {
+.bottom-section .radio-group input[type="radio"] + span {
     font-size: 16px;
     color: #333;
 }
 
-.radio-group input[type="radio"]:checked + span {
+.bottom-section .radio-group input[type="radio"]:checked + span {
     font-weight: bold;
     color: #007bff; /* 选中时的颜色 */
 }
 
-.radio-group input[type="radio"]:checked + span::before {
+.bottom-section .radio-group input[type="radio"]:checked + span::before {
     content: "◉ "; /* 选中时显示实心圆 */
 }
 
-.radio-group input[type="radio"]:not(:checked) + span::before {
+.bottom-section .radio-group input[type="radio"]:not(:checked) + span::before {
     content: "○ "; /* 未选中时显示空心圆 */
+}
+
+#upscale-description {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 10px;
+    width: 20%; /* 占满父容器宽度 */
+    box-sizing: border-box;
 }

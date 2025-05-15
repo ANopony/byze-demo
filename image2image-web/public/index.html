@@ -27,17 +27,20 @@
                 </div>
         </div>
         <div class="bottom-section">
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="location" value="local" id="upscale-location-local" checked>
-                    <span>本地</span>
-                </label>
-                <label>
-                    <input type="radio" name="location" value="cloud" id="upscale-location-cloud">
-                    <span>云端</span>
-                </label>
+            <div class="input-area">
+                <input type="text" id="upscale-description" placeholder="请输入图片改变方向">
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="location" value="local" id="upscale-location-local" checked>
+                        <span>本地</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="location" value="cloud" id="upscale-location-cloud">
+                        <span>云端</span>
+                    </label>
+                </div>
+                <button id="upscale-button" disabled>生成高清图</button>
             </div>
-            <button id="upscale-button" disabled>生成高清图</button>
             <div class="upscaled-image-display"></div>
         </div>
     </div>

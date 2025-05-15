@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const imageProcessing = require('./image_processing');
-const cors = require('cors'); // 解决跨域问题
+const cors = require('cors');
 
 const app = express();
 const port = 506;
@@ -23,7 +23,7 @@ app.post('/api/generate-image', async (req, res) => {
 });
 
 app.post('/api/upscale-image', async (req, res) => {
-    const { imageUrl, location } = req.body;
+    const { imageUrl, location, description } = req.body;
     try {
         const upscaledImageUrl = await imageProcessing.upscaleImage(imageUrl, location);
         res.json({ upscaledImageUrl });
