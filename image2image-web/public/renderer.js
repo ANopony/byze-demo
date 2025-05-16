@@ -26,7 +26,7 @@ generateButton.addEventListener('click', async () => {
             body: JSON.stringify({ prompt: promptText, location: location })
         });
         const data = await response.json();
-        if (data.imageUrls && data.imageUrls.length === 3) {
+        if (data.imageUrls && data.imageUrls.length > 0) {
             imageDisplay.innerHTML = '';
             generatedImageUrls = data.imageUrls.map((url, index) => {
                 const img = document.createElement('img');
