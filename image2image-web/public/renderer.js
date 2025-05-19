@@ -1,10 +1,9 @@
 const promptInput = document.getElementById('prompt');
-const generateLocationSelect = document.getElementById('generate-location');
 const generateButton = document.getElementById('generate-button');
 const imageDisplay = document.querySelector('.image-display');
-const upscaleLocationSelect = document.getElementById('upscale-location');
 const upscaleButton = document.getElementById('upscale-button');
 const upscaledImageDisplay = document.querySelector('.upscaled-image-display');
+const thumbnail = document.getElementById('thumbnail'); // 获取缩略图显示框的 img 元素
 
 let generatedImageUrls = [];
 let selectedImageUrl = null;
@@ -40,10 +39,16 @@ generateButton.addEventListener('click', async () => {
                 img.src = url;
                 img.classList.add('generated-image');
                 img.addEventListener('click', () => {
+                    // 清除其他图片的选中状态
                     document.querySelectorAll('.generated-image').forEach(el => el.classList.remove('selected'));
                     img.classList.add('selected');
                     selectedImageUrl = url;
-                    upscaleButton.disabled = false;
+
+                    // 更新缩略图显示框
+                    thumbnail.src = url; // 设置缩略图的 src 为选中图片的 URL
+                    thumbnail.alt = `选中的图片 ${index + 1}`; // 设置缩略图的 alt 属性
+
+                    upscaleButton.disabled = false; // 启用高清图按钮
                 });
                 imageDisplay.appendChild(img);
                 return url;
@@ -51,6 +56,10 @@ generateButton.addEventListener('click', async () => {
             upscaleButton.disabled = true;
             upscaledImageDisplay.innerHTML = '';
             selectedImageUrl = null;
+
+            // 清空缩略图显示框
+            thumbnail.src = '';
+            thumbnail.alt = '当前未选择图片';
         } else {
             alert('生成图片失败，请重试');
         }
