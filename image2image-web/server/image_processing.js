@@ -14,7 +14,7 @@ async function generateImage(prompt, location) {
     const data = {
         model: "OpenVINO/stable-diffusion-v1-5-fp16-ov",
         prompt: prompt,
-        size: "256x256",
+        size: "512x512",
         n: 4
     };
 

@@ -19,6 +19,7 @@ body {
     height: 90vh; /* 增加初始高度 */
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 .top-section {
     display: flex;
@@ -72,7 +73,9 @@ body {
     border: 1px solid #eee;
     padding: 10px;
     border-radius: 4px;
+    overflow: auto;
     min-height: 160px; /* 增加初始高度 */
+    max-height: 100%; /* 防止图片超出区域 */
 }
 
 .radio-group {
@@ -127,7 +130,7 @@ body {
 .bottom-section {
     padding-top: 20px;
     display: flex;
-    flex-direction: column; /* 改为垂直布局 */
+    flex-direction: row;
     gap: 10px;
     height: 75%;
 }
@@ -153,6 +156,7 @@ body {
 
 /* 调整按钮样式 */
 .bottom-section button {
+    width: 30%;
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -213,7 +217,7 @@ body {
     border-radius: 4px;
     font-size: 16px;
     margin-top: 10px;
-    width: 20%; /* 占满父容器宽度 */
+    width: 35%; 
     box-sizing: border-box;
 }
 
