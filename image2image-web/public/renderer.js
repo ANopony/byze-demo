@@ -17,6 +17,13 @@ generateButton.addEventListener('click', async () => {
         return;
     }
 
+    // 显示加载图样
+    const spinner = document.createElement('div');
+    spinner.classList.add('loading-spinner');
+    generateButton.disabled = true;
+    generateButton.textContent = '正在生成';
+    generateButton.appendChild(spinner);
+
     try {
         const response = await fetch('/api/generate-image', {
             method: 'POST',
@@ -51,7 +58,9 @@ generateButton.addEventListener('click', async () => {
         console.error('生成图片请求失败:', error);
         alert('生成图片请求失败');
     } finally {
-        promptInput.value = '';
+        // 隐藏加载图样
+        generateButton.disabled = false;
+        generateButton.textContent = 'AOG文生图';
     }
 });
 
@@ -68,6 +77,13 @@ upscaleButton.addEventListener('click', async () => {
         alert('请输入图片描述');
         return;
     }
+
+    // 显示加载图样
+    const spinner = document.createElement('div');
+    spinner.classList.add('loading-spinner');
+    upscaleButton.disabled = true;
+    upscaleButton.textContent = '正在生成';
+    upscaleButton.appendChild(spinner);
 
     try {
         const response = await fetch('/api/upscale-image', {
@@ -90,5 +106,9 @@ upscaleButton.addEventListener('click', async () => {
     } catch (error) {
         console.error('生成高清图请求失败:', error);
         alert('生成高清图请求失败');
+    } finally {
+        // 隐藏加载图样
+        upscaleButton.disabled = false;
+        upscaleButton.textContent = 'AOG图生图';
     }
 });

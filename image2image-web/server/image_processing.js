@@ -15,7 +15,7 @@ async function generateImage(prompt, location) {
         model: "OpenVINO/stable-diffusion-v1-5-fp16-ov",
         prompt: prompt,
         size: "256x256",
-        n: 2
+        n: 4
     };
 
     const result = await aog.TextToImage(data);
