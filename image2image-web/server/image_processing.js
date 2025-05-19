@@ -65,7 +65,7 @@ async function upscaleImage(imageUrl, location, description) {
         prompt: description,
         image: localImagePath, // 使用本地图片的 URL
         image_type: "path",
-        size: "2048x2048",
+        size: "1024x1024",
         n: 1
     };
     console.log(data);
