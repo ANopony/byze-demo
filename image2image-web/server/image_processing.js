@@ -51,9 +51,6 @@ async function generateImage(prompt, location) {
 
 }
 
-// 模拟的高清图 API
-
-
 async function upscaleImage(imageUrl, location, description) {
     console.log(`[${location}] 请求高清化图片，URL: ${imageUrl}`);
 
@@ -68,7 +65,7 @@ async function upscaleImage(imageUrl, location, description) {
         prompt: description,
         image: localImagePath, // 使用本地图片的 URL
         image_type: "path",
-        size: "512x512",
+        size: "2048x2048",
         n: 1
     };
     console.log(data);
