@@ -8,8 +8,11 @@
 </head>
 <body>
     <div class="container">
+        <!-- 上半部分 -->
         <div class="top-section">
+            <!-- 左上部分 -->
             <div class="input-area">
+                <p class="step-hint">第一步：生成垫图</p>
                 <input type="text" id="prompt" placeholder="请输入描述文字">
                 <div class="radio-group">
                     <label>
@@ -23,12 +26,19 @@
                 </div>
                 <button id="generate-button">AOG文生图</button>
             </div>
-            <div class="image-display">
-                </div>
+            <!-- 右上部分 -->
+            <div class="image-display"></div>
         </div>
+
+        <!-- 中间提示 -->
+        <p class="step-hint center-hint">第二步：选择图片</p>
+
+        <!-- 下半部分 -->
         <div class="bottom-section">
+            <!-- 左下部分 -->
             <div class="input-area">
-                <input type="text" id="upscale-description" placeholder="请输入描述文字">
+                <p class="step-hint">第三步：增强图片</p>
+                <input type="text" id="upscale-description" placeholder="选中图片后输入描述文字">
                 <div class="radio-group">
                     <label>
                         <input type="radio" name="location" value="local" id="upscale-location-local" checked>
@@ -40,7 +50,12 @@
                     </label>
                 </div>
                 <button id="upscale-button" disabled>AOG图生图</button>
+                <div class="thumbnail-display">
+                    <p>当前选择的图片：</p>
+                    <img id="thumbnail" src="" alt="缩略图" class="thumbnail">
+                </div>
             </div>
+            <!-- 右下部分 -->
             <div class="upscaled-image-display"></div>
         </div>
     </div>

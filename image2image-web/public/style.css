@@ -1,3 +1,4 @@
+/* 基础样式 */
 body {
     font-family: sans-serif;
     margin: 0;
@@ -14,35 +15,106 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 90%; /* 增加宽度 */
-    max-width: 1200px; /* 增加最大宽度 */
-    height: 90vh; /* 增加初始高度 */
+    width: 90%;
+    max-width: 1200px;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+
+/* 上半部分 */
 .top-section {
     display: flex;
-    margin-bottom: 20px;
-    height: 25%;
+    height: 25%; /* 占总高度的 25% */
 }
 
 .input-area {
     flex: 1;
-    padding-right: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    justify-content: space-between;
 }
 
-.input-area input[type="text"] {
+/* 垫图显示 */
+.image-display {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow: auto;
     padding: 10px;
+}
+
+/* 中间提示 */
+.center-hint {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin: 10px 0;
+}
+
+/* 下半部分 */
+.bottom-section {
+    display: flex;
+    height: 70%;
+}
+
+/* 输入部分 */
+.bottom-section .input-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    justify-content: space-between;
+}
+
+/* 增强后图片 */
+.upscaled-image-display {
+    flex: 2;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow: auto;
+    padding: 10px;
+}
+
+/* 缩略图显示框 */
+.thumbnail-display {
+    margin-top: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+    height: 200px; 
+    width: 200px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.input-area select {
+.thumbnail {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* 提示文字样式 */
+.step-hint {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* 输入框样式 */
+.input-area input[type="text"] {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -57,27 +129,19 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    width: auto;
 }
 
 .input-area button:hover {
     background-color: #0056b3;
 }
 
-.image-display {
-    flex: 2;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    overflow: auto;
-    border: 1px solid #eee;
-    padding: 10px;
-    border-radius: 4px;
-    overflow: auto;
-    min-height: 160px; /* 增加初始高度 */
-    max-height: 100%; /* 防止图片超出区域 */
+.input-area button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
+/* 单选按钮样式 */
 .radio-group {
     display: flex;
     gap: 10px;
@@ -113,6 +177,7 @@ body {
     content: "○ "; /* 未选中时显示空心圆 */
 }
 
+/* 生成的图片样式 */
 .generated-image {
     max-width: 150px;
     max-height: 150px;
@@ -133,102 +198,7 @@ body {
     transform: scale(1.1); /* 选中时放大 */
 }
 
-/* 调整 bottom-section 的布局 */
-.bottom-section {
-    padding-top: 20px;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    height: 75%;
-}
-
-/* 调整 input-area 的样式 */
-.bottom-section .input-area {
-    flex: 1;
-    padding-right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* 调整输入框样式 */
-#upscale-description {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    width: 100%; /* 与生成图片输入框一致 */
-    box-sizing: border-box;
-}
-
-/* 调整按钮样式 */
-.bottom-section button {
-    width: 30%;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.bottom-section button:hover {
-    background-color: #0056b3;
-}
-
-.bottom-section button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-/* 调整选择器样式 */
-.bottom-section .radio-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.bottom-section .radio-group label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.bottom-section .radio-group input[type="radio"] {
-    display: none; /* 隐藏默认单选按钮 */
-}
-
-.bottom-section .radio-group input[type="radio"] + span {
-    font-size: 16px;
-    color: #333;
-}
-
-.bottom-section .radio-group input[type="radio"]:checked + span {
-    font-weight: bold;
-    color: #007bff; /* 选中时的颜色 */
-}
-
-.bottom-section .radio-group input[type="radio"]:checked + span::before {
-    content: "◉ "; /* 选中时显示实心圆 */
-}
-
-.bottom-section .radio-group input[type="radio"]:not(:checked) + span::before {
-    content: "○ "; /* 未选中时显示空心圆 */
-}
-
-#upscale-description {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    margin-top: 10px;
-    width: 35%; 
-    box-sizing: border-box;
-}
-
-/* 添加加载动画样式 */
+/* 加载动画样式 */
 .loading-spinner {
     border: 4px solid #f3f3f3;
     border-top: 4px solid #007bff;
