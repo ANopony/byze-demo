@@ -91,6 +91,15 @@ body {
     padding: 10px;
 }
 
+/* 限制增强图片的大小 */
+.upscaled-image-display img {
+    max-width: 100%; /* 图片宽度不超过容器宽度 */
+    max-height: 100%; /* 图片高度不超过容器高度 */
+    object-fit: contain; /* 保持图片比例 */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
 /* 缩略图显示框 */
 .thumbnail-container {
     display: flex;
