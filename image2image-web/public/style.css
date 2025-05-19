@@ -120,10 +120,17 @@ body {
     border: 2px solid transparent;
     border-radius: 4px;
     object-fit: contain;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* 添加过渡效果 */
+}
+
+.generated-image:hover {
+    transform: scale(1.05); /* 鼠标悬停时略微放大 */
 }
 
 .generated-image.selected {
-    border-color: #28a745;
+    border-color: #28a745; /* 绿色边框 */
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.8); /* 添加绿色阴影 */
+    transform: scale(1.1); /* 选中时放大 */
 }
 
 /* 调整 bottom-section 的布局 */
