@@ -11,6 +11,9 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use('/images', express.static('server/images')); // 静态文件目录
 
+const aogchecker = require('aog-checker');
+aogchecker.AOGInit();
+
 app.post('/api/generate-image', async (req, res) => {
     const { prompt, location } = req.body;
     try {

@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "aog-checker": "file:aog-checker-1.1.0.tgz",
     "aog-lib": "file:aog-lib-1.2.23.tgz",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
